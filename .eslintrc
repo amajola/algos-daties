@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": ["eslint:recommended", "google"],
+    "rules": {
+        "array-element-newline": ["error", {
+            "ArrayExpression": "consistent",
+            "ArrayPattern": { "minItems": 3 },
+        }],
+        "max-len": [
+            "error", {"code": 1000}
+        ]
+    }
+  }
