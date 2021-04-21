@@ -1,16 +1,10 @@
+import NodeInterface from './type';
 
-interface NodeInterface {
-    value: number;
-    left: NodeInterface | null
-    right: NodeInterface | null;
-    parent: NodeInterface | null;
-}
-
-/** This is a description of the foo function. */
+/** Binary Search Tree Class */
 class BinarySearchTree {
     rootNode: NodeInterface;
 
-    /** This is a description of the foo function.
+    /** constructor for the class
     * @constructor
     * @param {string} rootValue - The value of the root node
     */
@@ -33,38 +27,57 @@ class BinarySearchTree {
     }
 
 
-    /** Traverses thought the tree in order sorting the values
+    /** Traverses thought the tree in order sorting the values removes duplicates
     * @constructor
     * @param {string} node - This is used for recursion.
     * @param {string} sortedValues - The Accumulator for the function
     */
-    inOrderTraversal(
+    sortedValues(
         node: NodeInterface = this.rootNode,
         sortedValues: Array<number> = []
     ): Array<number> {
-      if (
-        !sortedValues.includes(node.value) &&
-            node.left === null &&
-            node.right === null
-      ) {
+      if ( node.left === null && node.right === null) {
         sortedValues.push(node.value);
-        this.inOrderTraversal(node.parent, sortedValues);
-      } else if (!sortedValues.includes(node.left.value)) {
-        this.inOrderTraversal(node.left, sortedValues);
+        this.sortedValues(node.parent, sortedValues);
+      } else if ( node.left !== null && !sortedValues.includes(node.left.value) ) {
+        this.sortedValues(node.left, sortedValues);
         sortedValues.push(node.value);
-        if (
-          node.right != null &&
-                !sortedValues.includes(node.right.value)
-        ) {
-          this.inOrderTraversal(node.right, sortedValues);
+        if ( node.right !== null && !sortedValues.includes(node.right.value)) {
+          this.sortedValues(node.right, sortedValues);
           sortedValues.push(node.value);
         }
       }
       return sortedValues;
     }
 
+    /** Traverses thought using in order traversal
+    * @constructor
+    * @param {string} node - This is used for recursion.
+    * @param {string} sortedValues - The Accumulator for the function
+    */
+    inOrderTraversal(node: NodeInterface = this.rootNode, sortedValues: Array<number> = []) {
+      if (node !== null) {
+        this.inOrderTraversal(node.left, sortedValues);
+        sortedValues.push(node.value);
+        this.inOrderTraversal(node.right, sortedValues);
+      }
+    }
 
-    /** Creates a new Node
+    /** Traverses thought using post-order traversal
+    * @constructor
+    * @param {string} node - This is used for recursion.
+    * @param {string} sortedValues - The Accumulator for the function
+    */
+    postOrderTraversal(node: NodeInterface = this.rootNode, sortedValues: Array<number> = []) {
+      if (node !== null) {
+        this.postOrderTraversal(node.left, sortedValues);
+        this.postOrderTraversal(node.right, sortedValues);
+        sortedValues.push(node.value);
+      }
+    }
+
+
+    /** Find Minimum value of a node
     * @constructor
     * @param {string} node - Node used for the search
     */
@@ -75,7 +88,7 @@ class BinarySearchTree {
       return node;
     }
 
-    /** Creates a new Node
+    /** Finds Node in tree
     * @constructor
     * @param {string} nodeValue - Value used for the search
     * @param {string} node - Used for recursion.
@@ -89,7 +102,7 @@ class BinarySearchTree {
     }
 
 
-    /** Creates a new Node
+    /** Deletes a node
     * @constructor
     * @param {string} nodeValue - Value used for the search and delete node
     */
@@ -108,7 +121,7 @@ class BinarySearchTree {
       }
     }
 
-    /** Creates a new Node
+    /** Adds a new node to the tree
     * @constructor
     * @param {string} nodeValue - Value used create the new Node.
     * @param {string} node - Used for recursion
@@ -130,4 +143,9 @@ class BinarySearchTree {
     }
 }
 
+const node = new BinarySearchTree(8);
+[1, 2, 4, 5, 3].forEach((value, index) => {
+  node.addNode(value);
+});
+console.log(node.InOrderTraversal());
 export default BinarySearchTree;
