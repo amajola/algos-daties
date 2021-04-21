@@ -61,6 +61,7 @@ class BinarySearchTree {
         sortedValues.push(node.value);
         this.inOrderTraversal(node.right, sortedValues);
       }
+      return sortedValues;
     }
 
     /** Traverses thought using post-order traversal
@@ -74,6 +75,7 @@ class BinarySearchTree {
         this.postOrderTraversal(node.right, sortedValues);
         sortedValues.push(node.value);
       }
+      return sortedValues;
     }
 
 
@@ -143,9 +145,4 @@ class BinarySearchTree {
     }
 }
 
-const node = new BinarySearchTree(8);
-[1, 2, 4, 5, 3].forEach((value, index) => {
-  node.addNode(value);
-});
-console.log(node.InOrderTraversal());
 export default BinarySearchTree;
